@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+	<contextName>ng_lifehome_operate</contextName>
+	<!--定义日志文件的存储地址 -->
+	<property name="LOG_HOME" value="/apps/service/logs" />
+	<!-- <property name="LOG_HOME" value="D:/" /> -->
+
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+			<pattern>%d{HH:mm:ss.SSS} %-5level%-42(%logger{42})[%file:%line][%thread] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+
+		<!-- 可让每天产生一个日志文件，最多 180 个，自动回滚 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyy-MM,aux}/lifehome-operate-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- keep 180 days' worth of history capped at 50GB total size -->
+			<maxHistory>180</maxHistory>
+			<totalSizeCap>40GB</totalSizeCap>
+		</rollingPolicy>
+
+		<encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+			<pattern>%d{HH:mm:ss.SSS} %-5level%-42(%logger{42})[%file:%line][%thread] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="AsyncRollingFile" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="RollingFile" />
+		<includeCallerData>true</includeCallerData>
+	</appender>
+
+	<!-- 输出到控制台和文件，可定义更多的 Appender -->
+	<root level="INFO">
+		<appender-ref ref="Console" />
+		<appender-ref ref="AsyncRollingFile" />
+	</root>
+
+	<!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+	<logger name="org.mybatis" level="INFO" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="com.opensymphony" level="WARN" />
+	<logger name="org.apache" level="WARN" />
+	<!--如果需要打印SQL,可以把下面的级别设置为DEBUG -->
+	<logger name="org.ssm.dufy" level="DEBUG" />
+
+
+</configuration>

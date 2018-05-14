@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.PayMapper" >
+  <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.PayDmo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="book" jdbcType="VARCHAR" property="book" />
+    <result column="peiyang" jdbcType="VARCHAR" property="peiyang" />
+    <result column="zhusu" jdbcType="VARCHAR" property="zhusu" />
+    <result column="total" jdbcType="VARCHAR" property="total" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+  </resultMap>
+  
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from pay
+  </select> 
+
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     SELECT p.*,u.uname FROM pay p 
+	LEFT JOIN USER u ON p.userid=u.uid 
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	  
+     
+</mapper>

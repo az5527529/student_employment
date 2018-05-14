@@ -1,0 +1,7 @@
+.gallery-item{
+	width:90px;
+	height:50px;
+}
+.gallery-item > img{
+	padding: 2px 2px 2px;
+}

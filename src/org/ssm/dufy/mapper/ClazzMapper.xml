@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.ClazzMapper" >
+  <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.ClazzDmo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="xueyuan" jdbcType="VARCHAR" property="xueyuan" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="clazzname" jdbcType="VARCHAR" property="clazzname" />
+  </resultMap>
+  
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from clazz
+  </select> 
+
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     SELECT * FROM `clazz` 
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+     
+	  <insert id="addStudent">
+	  	insert into clazz(clazzname,major,xueyuan)
+	  	values(#{clazzname},#{major},#{xueyuan})
+	  </insert>
+	  
+	  <update id="edit">
+	  update clazz set major=#{type} where id=#{id}
+	  </update>
+     
+</mapper>

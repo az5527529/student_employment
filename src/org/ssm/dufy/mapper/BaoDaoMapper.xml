@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.BaoDaoMapper" >
+  <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.Sysuser">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="utype" jdbcType="VARCHAR" property="utype" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="mbanswer" jdbcType="VARCHAR" property="mbanswer" />
+    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
+    <result column="tname" jdbcType="VARCHAR" property="tname" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="clazzName" jdbcType="VARCHAR" property="clazzName" />
+    <result column="roomname" jdbcType="VARCHAR" property="roomname" />
+  </resultMap>
+  
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) FROM user where utype='2' 
+  </select> 
+
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     SELECT u.*,CONCAT(c.xueyuan,c.major,c.clazzname) clazzName,CONCAT(d.building,d.floor,d.roomname) roomname FROM USER u 
+		LEFT JOIN clazz c ON c.id=u.clazzid
+		LEFT JOIN dormitory d ON u.roomid=d.id
+		WHERE u.utype='2' 
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+     
+     <update id="payMoney" >
+     	update user set status=#{status} where uid=#{uid}
+     </update>
+     
+     <resultMap id="BaseResultMap1" type="org.ssm.dufy.entity.Sysuser">
+	    <id column="id" jdbcType="INTEGER" property="uid" />
+	    <result column="clazzName" jdbcType="VARCHAR" property="clazzName" />
+	  </resultMap>
+     <select id="getClazzName" resultMap="BaseResultMap1">
+     	SELECT 
+		c.id,
+		CONCAT(c.xueyuan,c.major,c.clazzname) clazzName
+		FROM clazz c
+     </select>
+     
+     <resultMap id="BaseResultMap2" type="org.ssm.dufy.entity.Sysuser">
+	    <id column="id" jdbcType="INTEGER" property="uid" />
+	    <result column="total" jdbcType="VARCHAR" property="total" />
+	    <result column="roomname" jdbcType="VARCHAR" property="roomname" />
+	    <result column="surplus" jdbcType="VARCHAR" property="surplus" />
+	  </resultMap>
+     <select id="getRoom" resultMap="BaseResultMap2">
+     	SELECT 
+		d.id,
+		CONCAT(d.building,d.floor,d.roomname) roomname,
+		d.total,
+		d.surplus
+		FROM dormitory d
+     </select>
+     
+     <update	id="updateClazz">
+     	update user set status=#{status},clazzid=#{clazzName} where uid=#{uid}
+     </update>
+     
+     <update	id="updateRoom">
+     	update user set status=#{status},roomid=#{roomname} where uid=#{uid}
+     </update>
+	  
+	  <update	id="updateRoomSurplus">
+     	update dormitory set surplus=surplus-1 where id=#{roomname}
+     </update>
+     
+</mapper>
