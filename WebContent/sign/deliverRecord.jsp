@@ -2,7 +2,16 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
-
+<%
+    String userId = request.getParameter("userId");//用户id
+    if(userId == null || "null".equals(userId)){
+        userId = "";
+    }
+    String jobInfoId = request.getParameter("jobInfoId");//职位id
+    if(jobInfoId == null || "null".equals(jobInfoId)){
+        jobInfoId = "";
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,49 +121,22 @@
                 <div class="panel-heading">查询条件</div>
                 <div class="panel-body">
                     <form id="formSearch" class="form-horizontal">
-                        <div class="form-group" style="margin-top:15px">
-                            <label style="padding: 10px 0" class="control-label col-sm-1" for="jobNameSearch">职位名称</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="jobNameSearch">
-                            </div>
-                            <label  style="padding: 10px 0" class="control-label col-sm-1" for="statusSearch">职位状态</label>
-                            <div class="col-sm-3">
-                                <select id="statusSearch" class="form-control">
-                                    <option value=""></option>
-                                    <option value="1">招聘中</option>
-                                    <option value="2">已结束</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4" style="text-align:left;">
-                                <button  type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                            </div>
-                        </div>
+                        <input type="hidden" id="userId" value="<%=userId%>">
+                        <input type="hidden" id="jobInfoId" value="<%=jobInfoId%>">
+                        <%--<div class="form-group" style="margin-top:15px">--%>
+
+                            <%--<div class="col-sm-4" style="text-align:left;">--%>
+                                <%--<button  type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                     </form>
                 </div>
             </div>
 
             <div id="toolbar" class="btn-group">
-                <c:if test="${sessionScope.auser.utype==3}">
-                    <button id="btn_add" type="button" class="btn btn-default" onclick="newJob()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                    </button>
-                    <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                    </button>
-                    <button id="btn_delete" type="button" class="btn btn-default" onclick="deleteByID()">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                    </button>
-                </c:if>
-                <c:if test="${sessionScope.auser.utype==1}">
-                    <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                    </button>
-                    <button id="btn_delete" type="button" class="btn btn-default" onclick="deleteByID()">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                    </button>
-                </c:if>
+
             </div>
-            <table id="jobInfo"></table>
+            <table id="deliverRecord"></table>
         </div>
         <!--body wrapper end-->
 
@@ -168,73 +150,7 @@
     </div>
     <!-- main content end-->
 </section>
-<div style="width:80%;height:50%;display:none;padding-top:5px;" id="inputDiv">
-    <form class="form-horizontal" role="form" id="subForm">
-        <input type="hidden" value="" id="jobInfoId" name="jobInfoId">
-        <div class="form-group">
-            <label class="col-sm-4 control-label">
-                职位名称：
-            </label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control"  name="jobName" id="jobName"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">
-                招聘人数：
-            </label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" name="hireNum" id="hireNum" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">
-                需求：
-            </label>
-            <div class="col-sm-8">
-                <textarea name="requirement" class="form-control" style="resize: none;" rows="5" id="requirement"></textarea>
-            </div>
-        </div><div class="form-group">
-            <label class="col-sm-4 control-label">
-                状态：
-            </label>
-            <div class="col-sm-8">
-                <select id="status" name="status" class="form-control">
-                    <option value="1">招聘中</option>
-                    <option value="2">已结束</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-6 ">
-                <button type="button" onclick="doSubmit()" class="btn btn-success">确定</button>
-                <button type="button" class="btn btn-success" onclick="closeAllLayer()">取消</button>
-            </div>
-        </div>
-    </form>
-</div>
 
-<div style="width:80%;height:50%;display:none;padding-top:5px;" id="resumeDiv">
-    <form class="form-horizontal" role="form">
-        <input type="hidden" name="jobInfoId">
-        <div class="form-group">
-            <label class="col-sm-4 control-label">
-               请选择简历：
-            </label>
-            <div class="col-sm-8">
-                <select class="form-control" id="resumeName" name="resumeName"></select>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-sm-offset-6 ">
-                <button type="button" onclick="deliver()" class="btn btn-success">确定</button>
-                <button type="button" class="btn btn-success" onclick="closeAllLayer()">取消</button>
-            </div>
-        </div>
-    </form>
-</div>
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="${basePath}/js/jquery-1.10.2.min.js"></script>
 <script src="${basePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -256,6 +172,6 @@
     var userType = "${sessionScope.auser.utype}";
 
 </script>
-<script src="${basePath}/js/sign/jobInfo.js"></script>
+<script src="${basePath}/js/sign/deliverRecord.js"></script>
 </body>
 </html>

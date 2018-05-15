@@ -60,6 +60,7 @@
             <span>个人信息</span></a></li>
         <li><a href="${basePath}/sign/jobInfo.jsp"><i class="fa fa-home"></i> <span>查看招聘信息</span></a></li>
         <li><a href="${basePath}/sign/resumeInfo.jsp"><i class="fa fa-home"></i> <span>简历管理</span></a></li>
+        <li><a href="${basePath}/sign/deliverRecord.jsp?userId=${sessionScope.auser.uid}"><i class="fa fa-home"></i> <span>投递记录</span></a></li>
     </ul>
 </c:if>
 <c:if test="${sessionScope.auser.utype == 3 }">

@@ -79,6 +79,10 @@ var TableInit = function () {
         }else if(userType ==3){
             //企业，隐藏投递按钮
             $('#jobInfo').bootstrapTable('hideColumn', 'deliver');
+        }else if(userType ==1){
+            //管理员，隐藏按钮
+            $('#jobInfo').bootstrapTable('hideColumn', 'findDeliver');
+            $('#jobInfo').bootstrapTable('hideColumn', 'deliver');
         }
     };
 
@@ -217,7 +221,7 @@ function deleteByID(){
     }
 }
 
-function findDeliverFormatter(value,rowData,index){
+function deliverFormatter(value,rowData,index){
     return "<a style='color: blue;cursor: pointer;' onclick='doDeliver("+rowData.jobInfoId+")'>投递</a>";
 }
 
@@ -236,14 +240,19 @@ function doDeliver(jobInfoId){
     });
     layer.open({
         type: 1,//层的类型。0：信息框（默认），1：页面层，2：iframe层，3：加载层，4：tips层。
-        area: ['50%', '7	0%'],//控制层宽高 [宽度, 高度]
+        area: ['40%', '40%'],//控制层宽高 [宽度, 高度]
         content: $("#resumeDiv"),
-        offset: ['100px', '300px'],
+        offset: ['100px', '400px'],
         title: '选择简历',
         scrollbar: false
     });
 }
 function deliver(){
+    var resumeName = $("#resumeName").val();
+    if(!resumeName){
+        layer.alert('请选择可用简历', {icon: 5});
+        return;
+    }
     $.ajax({
         type: "POST",
         url: ctx+"/deliverRecord/addOrUpdate.do",
@@ -262,6 +271,6 @@ function deliver(){
 }
 
 
-function deliverFormatter(value,rowData,index){
-    return "<a style='color: blue;cursor: pointer;' onclick='openDetail("+rowData.jobInfoId+")'>查看投递记录</a>";
+function findDeliverFormatter(value,rowData,index){
+    return "<a style='color: blue;cursor: pointer;' href='"+ctx+"/sign/deliverRecord.jsp?jobInfoId=" + rowData.jobInfoId+"'>查看投递记录</a>";
 }

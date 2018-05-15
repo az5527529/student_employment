@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.DeliverRecordMapper" >
+  <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.DeliverRecord" >
+    <id column="deliver_record_id" property="deliverRecordId" jdbcType="INTEGER" />
+    <result column="job_info_id" property="jobInfoId" jdbcType="INTEGER" />
+    <result column="resume_info_id" property="resumeInfoId" jdbcType="INTEGER" />
+    <result column="deliver_time" property="deliverTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    deliver_record_id, job_info_id, resume_info_id, deliver_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_record
+    where deliver_record_id = #{deliverRecordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_record
+    where deliver_record_id = #{deliverRecordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ssm.dufy.entity.DeliverRecord" >
+    insert into deliver_record (deliver_record_id, job_info_id, resume_info_id, 
+      deliver_time)
+    values (#{deliverRecordId,jdbcType=INTEGER}, #{jobInfoId,jdbcType=INTEGER}, #{resumeInfoId,jdbcType=INTEGER}, 
+      #{deliverTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ssm.dufy.entity.DeliverRecord" useGeneratedKeys="true" keyProperty="skillInfoId">
+    insert into deliver_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliverRecordId != null" >
+        deliver_record_id,
+      </if>
+      <if test="jobInfoId != null" >
+        job_info_id,
+      </if>
+      <if test="resumeInfoId != null" >
+        resume_info_id,
+      </if>
+      <if test="deliverTime != null" >
+        deliver_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliverRecordId != null" >
+        #{deliverRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="jobInfoId != null" >
+        #{jobInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="resumeInfoId != null" >
+        #{resumeInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverTime != null" >
+        #{deliverTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ssm.dufy.entity.DeliverRecord" >
+    update deliver_record
+    <set >
+      <if test="jobInfoId != null" >
+        job_info_id = #{jobInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="resumeInfoId != null" >
+        resume_info_id = #{resumeInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverTime != null" >
+        deliver_time = #{deliverTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where deliver_record_id = #{deliverRecordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ssm.dufy.entity.DeliverRecord" >
+    update deliver_record
+    set job_info_id = #{jobInfoId,jdbcType=INTEGER},
+      resume_info_id = #{resumeInfoId,jdbcType=INTEGER},
+      deliver_time = #{deliverTime,jdbcType=VARCHAR}
+    where deliver_record_id = #{deliverRecordId,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="resultMap" type="java.util.HashMap" >
+    <id column="deliver_record_id" property="deliverRecordId" jdbcType="INTEGER" />
+    <result column="job_info_id" property="jobInfoId" jdbcType="INTEGER" />
+    <result column="resume_info_id" property="resumeInfoId" jdbcType="INTEGER" />
+    <result column="deliver_time" property="deliverTime" jdbcType="VARCHAR" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="requirement" property="requirement" jdbcType="VARCHAR" />
+    <result column="hire_num" property="hireNum" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--分页查询-->
+  <select id="getByPage" parameterType="java.util.Map" resultMap="resultMap">
+    select r.deliver_record_id ,r.deliver_time ,r.job_info_id ,r.resume_info_id
+    ,ji.job_name ,ji.status ,ji.requirement ,ji.hire_num ,ji.created_time
+    ,ri.name
+    from deliver_record r
+    left join resume_info ri on ri.resume_info_id=r.resume_info_id
+    left join job_info ji on ji.job_info_id=r.job_info_id
+    where 1=1
+
+    <if test="jobInfoId!=null and jobInfoId != ''">
+      and r.job_info_id =#{jobInfoId,jdbcType=INTEGER}
+    </if>
+    <if test="userId!=null and userId != ''">
+      and ri.user_Id =#{userId,jdbcType=INTEGER}
+    </if>
+    order by deliver_time desc
+    <if test="pageNo!=null and pageSize!=null">
+      limit #{pageNo,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+
+  </select>
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select count(1)
+    from deliver_record r
+    left join resume_info ri on ri.resume_info_id=r.resume_info_id
+    left join job_info ji on ji.job_info_id=r.job_info_id
+    where 1=1
+
+    <if test="jobInfoId!=null and jobInfoId != ''">
+      and r.job_info_id =#{jobInfoId,jdbcType=INTEGER}
+    </if>
+    <if test="userId!=null and userId != ''">
+      and ri.user_Id =#{userId,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

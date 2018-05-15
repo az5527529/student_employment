@@ -167,7 +167,7 @@
         </if>
     </select>
 
-    //通过用户id获取简历
+    <!--通过用户id获取简历-->
     <select id="getByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

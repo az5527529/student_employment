@@ -33,13 +33,13 @@
 		<!-- 要生成那些表(更改tableName（数据库中的表名或者视图名） 和domainObjectName（是实体类名）就可以) -->
 		<!--<table tableName="job_info" domainObjectName="JobInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
 		
-		<table tableName="resume_info" domainObjectName="ResumeInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<!--<table tableName="resume_info" domainObjectName="ResumeInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		
-		<!--<table tableName="work_experience" domainObjectName="WorkExperience" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="work_experience" domainObjectName="WorkExperience" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		
-		<table tableName="skill_info" domainObjectName="SkillInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="skill_info" domainObjectName="SkillInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
 		
-		<table tableName="deliver_record" domainObjectName="DeliverRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		<table tableName="deliver_record" domainObjectName="DeliverRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> 
 		
 	</context>
 </generatorConfiguration>
