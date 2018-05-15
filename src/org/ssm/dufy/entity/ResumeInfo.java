@@ -7,6 +7,8 @@ public class ResumeInfo {
 
     private String name;
 
+    private String telephone;
+
     private String major;
 
     private String school;
@@ -39,6 +41,14 @@ public class ResumeInfo {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone == null ? null : telephone.trim();
     }
 
     public String getMajor() {

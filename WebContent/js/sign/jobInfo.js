@@ -59,12 +59,27 @@ var TableInit = function () {
             }, {
                 field: 'createdTime',
                 title: '发布时间'
-            }, {
+            }/*, {
                 field: 'userId',
                 title: '发布企业'
+            }*/, {
+                field: 'deliver',
+                title: '投递',
+                formatter:deliverFormatter
+            },{
+                field: 'findDeliver',
+                title: '查看投递记录',
+                formatter:findDeliverFormatter
             },]
         });
         $('#jobInfo').bootstrapTable('hideColumn', 'jobInfoId');
+        //学生，隐藏查看投递记录
+        if(userType == 2){
+            $('#jobInfo').bootstrapTable('hideColumn', 'findDeliver');
+        }else if(userType ==3){
+            //企业，隐藏投递按钮
+            $('#jobInfo').bootstrapTable('hideColumn', 'deliver');
+        }
     };
 
     //得到查询的参数
@@ -129,7 +144,7 @@ function edit(){
         return;
     }
     for(var name in data){
-        if($("#subForm input[name='"+name+"']")){
+        if($("#"+name)){
             $("#"+name).val(data[name]);
         }
 
@@ -200,4 +215,53 @@ function deleteByID(){
             }
         });
     }
+}
+
+function findDeliverFormatter(value,rowData,index){
+    return "<a style='color: blue;cursor: pointer;' onclick='doDeliver("+rowData.jobInfoId+")'>投递</a>";
+}
+
+function doDeliver(jobInfoId){
+    $("#resumeDiv input[name='jobInfoId']").val(jobInfoId);
+    $.ajax({
+        type: "POST",
+        url: ctx+"/resumeInfo/getByUserId.do",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (index, units) {
+                $("#resumeName").append("<option value="+units.resumeInfoId+">" + units.resumeName + "</option>");
+            });
+        }
+    });
+    layer.open({
+        type: 1,//层的类型。0：信息框（默认），1：页面层，2：iframe层，3：加载层，4：tips层。
+        area: ['50%', '7	0%'],//控制层宽高 [宽度, 高度]
+        content: $("#resumeDiv"),
+        offset: ['100px', '300px'],
+        title: '选择简历',
+        scrollbar: false
+    });
+}
+function deliver(){
+    $.ajax({
+        type: "POST",
+        url: ctx+"/deliverRecord/addOrUpdate.do",
+        data: {'jobInfoId':$("#resumeDiv input[name='jobInfoId']").val(), 'resumeInfoId': $("#resumeName").val()},
+        dataType: "json",
+        success: function (data) {
+            if (data == '1') {
+                layer.alert('投递成功', {icon: 6});
+                closeAllLayer();
+                $("#jobInfo").bootstrapTable('refresh');
+            } else {
+                layer.alert('操作失败', {icon: 5});
+            }
+        }
+    });
+}
+
+
+function deliverFormatter(value,rowData,index){
+    return "<a style='color: blue;cursor: pointer;' onclick='openDetail("+rowData.jobInfoId+")'>查看投递记录</a>";
 }

@@ -26,7 +26,7 @@
     values (#{skillInfoId,jdbcType=INTEGER}, #{skillName,jdbcType=VARCHAR}, #{skillAbility,jdbcType=TINYINT}, 
       #{resumeInfoId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.ssm.dufy.entity.SkillInfo" >
+  <insert id="insertSelective" parameterType="org.ssm.dufy.entity.SkillInfo"  useGeneratedKeys="true" keyProperty="skillInfoId">
     insert into skill_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="skillInfoId != null" >
@@ -79,4 +79,14 @@
       resume_info_id = #{resumeInfoId,jdbcType=INTEGER}
     where skill_info_id = #{skillInfoId,jdbcType=INTEGER}
   </update>
+
+  <select id="getByResumeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from skill_info where 1=1
+    and resume_Info_Id =#{resumeInfoId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByResumeId" parameterType="java.lang.Integer" >
+    delete from skill_info
+    where resume_info_id = #{resumeInfoId,jdbcType=INTEGER}
+  </delete>
 </mapper>

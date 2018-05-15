@@ -58,7 +58,8 @@
     <ul class="nav nav-pills nav-stacked custom-nav">
         <li><a href="${basePath}/infoManage.do?uid=${sessionScope.auser.uid}"><i class="fa fa-comments"></i>
             <span>个人信息</span></a></li>
-        <li><a href="${basePath}/qiyeInfo.do?type=3"><i class="fa fa-home"></i> <span>查看企业信息</span></a></li>
+        <li><a href="${basePath}/sign/jobInfo.jsp"><i class="fa fa-home"></i> <span>查看招聘信息</span></a></li>
+        <li><a href="${basePath}/sign/resumeInfo.jsp"><i class="fa fa-home"></i> <span>简历管理</span></a></li>
     </ul>
 </c:if>
 <c:if test="${sessionScope.auser.utype == 3 }">

@@ -31,7 +31,7 @@
       #{description,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
       #{resumeInfoId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.ssm.dufy.entity.WorkExperience" >
+  <insert id="insertSelective" parameterType="org.ssm.dufy.entity.WorkExperience"  useGeneratedKeys="true" keyProperty="workExperienceId">
     insert into work_experience
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="workExperienceId != null" >
@@ -114,4 +114,15 @@
       resume_info_id = #{resumeInfoId,jdbcType=INTEGER}
     where work_experience_id = #{workExperienceId,jdbcType=INTEGER}
   </update>
+
+  <select id="getByResumeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from work_experience where 1=1
+    and resume_Info_Id =#{resumeInfoId,jdbcType=INTEGER}
+    order by end_time desc
+  </select>
+
+  <delete id="deleteByResumeId" parameterType="java.lang.Integer" >
+    delete from work_experience
+    where resume_info_id = #{resumeInfoId,jdbcType=INTEGER}
+  </delete>
 </mapper>
