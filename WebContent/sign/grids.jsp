@@ -104,6 +104,7 @@ table th{
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                           	  欢迎您！<span style="color:red">${sessionScope.auser.tname }</span>
                         </a>
+                        <a style="cursor: pointer;color: black;" href="${basePath}/logout.do">注销</a>
                     </li>
 
                 </ul>

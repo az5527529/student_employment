@@ -16,80 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`student_employment` /*!40100 DEFAULT CH
 
 USE `student_employment`;
 
-/*Table structure for table `clazz` */
-
-DROP TABLE IF EXISTS `clazz`;
-
-CREATE TABLE `clazz` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `clazzname` varchar(20) DEFAULT NULL,
-  `major` varchar(20) DEFAULT NULL,
-  `xueyuan` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
-/*Data for the table `clazz` */
-
-insert  into `clazz`(`id`,`clazzname`,`major`,`xueyuan`) values 
-(1,'7','2','求java开发一枚'),
-(2,'7','1','求java开发一枚'),
-(3,'7','1','求java开发一枚'),
-(4,'7','2','求java开发一枚'),
-(8,'8','2','求java开发一枚'),
-(9,'8','2','求java开发一枚'),
-(10,'8','1','求java开发一枚'),
-(11,'8','1','求java开发一枚');
-
-/*Table structure for table `dormitory` */
-
-DROP TABLE IF EXISTS `dormitory`;
-
-CREATE TABLE `dormitory` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `roomname` varchar(100) DEFAULT NULL COMMENT '房间号',
-  `type` varchar(20) DEFAULT NULL,
-  `building` varchar(20) DEFAULT NULL COMMENT '哪栋',
-  `floor` text COMMENT '哪层',
-  `total` int(10) DEFAULT '0' COMMENT '几人间',
-  `surplus` int(10) DEFAULT '0' COMMENT '剩余房间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
-/*Data for the table `dormitory` */
-
-insert  into `dormitory`(`id`,`roomname`,`type`,`building`,`floor`,`total`,`surplus`) values 
-(1,'南京市天河区车陂路70号悦华商务大厦','JAVA','江苏南京','1、市场营销、计算机相关专业专科以上学历；\n2、性格外向、开朗、善于交流，诚实正直，具有团队协作精神',6,1),
-(2,'南京市天河区车陂路70号悦华商务大厦','安卓','江苏南京','1、市场营销、计算机相关专业专科以上学历；\r\n2、性格外向、开朗、善于交流，诚实正直，具有团队协作精神',4,2),
-(3,'南京市天河区车陂路70号悦华商务大厦','安卓','江苏南京','1、市场营销、计算机相关专业专科以上学历；\r\n2、性格外向、开朗、善于交流，诚实正直，具有团队协作精神',4,2),
-(4,'南京市天河区车陂路70号悦华商务大厦','安卓','江苏南京','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,2),
-(5,'南京市天河区车陂路70号悦华商务大厦','安卓','江苏南京','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,1),
-(6,'上海市天河区车陂路70号悦华商务大厦','C','上海','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,2),
-(7,'上海市天河区车陂路70号悦华商务大厦','C#','上海','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,2),
-(15,'上海市天河区车陂路70号悦华商务大厦','C#','上海','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,4),
-(16,'北京市天河区车陂路70号悦华商务大厦','C#','北京','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',4,3),
-(17,'北京市天河区车陂路70号悦华商务大厦','JAVA','北京','1、统计每日网络平台访问的情况，做出数据报表；2、负责信息内容的搜集、整合和编辑，',8,8);
-
-/*Table structure for table `pay` */
-
-DROP TABLE IF EXISTS `pay`;
-
-CREATE TABLE `pay` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) DEFAULT NULL COMMENT '学生ID',
-  `book` varchar(10) DEFAULT '200' COMMENT '书本费',
-  `peiyang` varchar(10) DEFAULT '3000' COMMENT '培养费',
-  `zhusu` varchar(10) DEFAULT '1000' COMMENT '住宿',
-  `total` varchar(10) DEFAULT '4200' COMMENT '合计',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
-/*Data for the table `pay` */
-
-insert  into `pay`(`id`,`userid`,`book`,`peiyang`,`zhusu`,`total`) values 
-(2,3,'200','3000','1000','4200'),
-(3,4,'200','3000','1000','4200'),
-(4,2,'200','3000','1000','4200'),
-(5,8,'200','3000','1000','4200');
 
 /*Table structure for table `user` */
 
@@ -131,25 +57,7 @@ insert  into `user`(`uid`,`uname`,`sex`,`pwd`,`utype`,`age`,`mbanswer`,`tname`,`
 (19,'我是企业',NULL,'123','3','我是企业我是企业我是企业1111',NULL,'我是企业','','1','2018-04-17 15:25:57',NULL,'1',NULL,NULL),
 (20,'admin111',NULL,'123','1','26',NULL,'admin111',NULL,'1','2018-04-17 15:26:18',NULL,'1',NULL,NULL);
 
-/*Table structure for table `zhaoping` */
 
-DROP TABLE IF EXISTS `zhaoping`;
-
-CREATE TABLE `zhaoping` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) DEFAULT NULL,
-  `content` text,
-  `flag` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
-/*Data for the table `zhaoping` */
-
-insert  into `zhaoping`(`id`,`userid`,`content`,`flag`) values 
-(1,7,'秋JAVA一枚','1'),
-(2,7,'秋JAVA一枚','1'),
-(3,8,'秋JAVA一枚1','1'),
-(4,8,'秋JAVA一枚3333','1');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

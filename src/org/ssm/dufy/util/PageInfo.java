@@ -1,4 +1,4 @@
-﻿package org.ssm.dufy.util;
+package org.ssm.dufy.util;
 
 import java.util.List;
 

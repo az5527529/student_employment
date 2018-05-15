@@ -1,163 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ssm.dufy.dao.SysuserMapper">
-  <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.Sysuser">
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
-    <result column="sex" jdbcType="VARCHAR" property="sex" />
-    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="utype" jdbcType="VARCHAR" property="utype" />
-    <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="age" jdbcType="VARCHAR" property="age" />
-    <result column="mbanswer" jdbcType="VARCHAR" property="mbanswer" />
-    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
-    <result column="tname" jdbcType="VARCHAR" property="tname" />
-    <result column="isdel" jdbcType="VARCHAR" property="isdel" />
-     <result column="clazzid" jdbcType="VARCHAR" property="clazzid" />
-    <result column="roomid" jdbcType="VARCHAR" property="roomid" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="org.ssm.dufy.entity.Sysuser">
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="uname" jdbcType="VARCHAR" property="uname"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="utype" jdbcType="VARCHAR" property="utype"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="mbanswer" jdbcType="VARCHAR" property="mbanswer"/>
+        <result column="pubtime" jdbcType="VARCHAR" property="pubtime"/>
+        <result column="tname" jdbcType="VARCHAR" property="tname"/>
+        <result column="isdel" jdbcType="VARCHAR" property="isdel"/>
+        <result column="clazzid" jdbcType="VARCHAR" property="clazzid"/>
+        <result column="roomid" jdbcType="VARCHAR" property="roomid"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     uid, uname, sex, pwd, utype, age, mbanswer, pubtime, major,
     tname, isdel,roomid,clazzid,status
   </sql>
-  
-  
-  <insert id="insert" parameterType="org.ssm.dufy.entity.Sysuser">
+
+
+    <insert id="insert" parameterType="org.ssm.dufy.entity.Sysuser">
     insert into user (uname, sex, pwd, utype, age, mbanswer, pubtime, major,
     tname, isdel
       )
     values (#{uname},#{sex},#{pwd},#{utype},#{age},#{mbanswer},#{pubtime},#{major},
     #{tname},#{isdel})
   </insert>
-  
-  <select id="adminLogin" parameterType="java.util.Map" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where isdel="1"  and uname = #{uname,jdbcType=VARCHAR} and pwd=#{pwd,jdbcType=VARCHAR}
-    and utype = #{utype,jdbcType=VARCHAR} 
-  </select>
-  
-  <select id="getCount" parameterType="java.util.Map" resultType="int">
-    select  count(*) from user  where isdel=#{isdel}
-    <if test="utype!=null">
-    and utype =#{utype}
-    </if>
-    <if test="uid!=null">
-    and uid =#{uid} 
-     </if>
-  </select> 
 
-   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
-     select *from user where isdel=#{isdel}
-     <if test="uname!=null">
-    and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
-     </if>
-     <if test="utype!=null">
-    and utype =#{utype}
-     </if>
-     <if test="uid!=null">
-    and uid =#{uid} 
-     </if>
-     <if test="pageno!=null and pageSize!=null">
-     limit #{pageno},#{pageSize}
-     </if>
-     
-     </select>
-     
-     <update id="update" parameterType="Integer">
+    <select id="adminLogin" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where isdel="1" and uname = #{uname,jdbcType=VARCHAR} and pwd=#{pwd,jdbcType=VARCHAR}
+        and utype = #{utype,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from user where isdel=#{isdel}
+        <if test="utype!=null">
+            and utype =#{utype}
+        </if>
+        <if test="uid!=null">
+            and uid =#{uid}
+        </if>
+    </select>
+
+    <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select *from user where isdel=#{isdel}
+        <if test="uname!=null">
+            and uname like concat('%',#{uname,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="utype!=null">
+            and utype =#{utype}
+        </if>
+        <if test="uid!=null">
+            and uid =#{uid}
+        </if>
+        <if test="pageno!=null and pageSize!=null">
+            limit #{pageno},#{pageSize}
+        </if>
+
+    </select>
+
+    <update id="update" parameterType="Integer">
     update user set isdel='1'
     where uid = #{uid,jdbcType=INTEGER}
   </update>
-  
-  <update id="updateAll">
+
+    <update id="updateAll">
     update user set isdel='1'
     where isdel='2'
   </update>
-  
-  <insert id="insertForgetPwd" parameterType="org.ssm.dufy.entity.Sysuser">
+
+    <insert id="insertForgetPwd" parameterType="org.ssm.dufy.entity.Sysuser">
     insert into forget_pwd (username, userno, major, remark,flag)
     values (#{uname},#{userno},#{major},#{remark},#{isdel})
   </insert>
-  
-  <select id="getCountToPwd" parameterType="java.util.Map" resultType="int">
+
+    <select id="getCountToPwd" parameterType="java.util.Map" resultType="int">
     select  count(*) from forget_pwd  where flag="2"
-  </select> 
+  </select>
 
 
-	<resultMap id="BaseResultMap2" type="org.ssm.dufy.entity.Sysuser">
-    <id column="id" jdbcType="INTEGER" property="uid" />
-    <result column="username" jdbcType="VARCHAR" property="uname" />
-    <result column="userno" jdbcType="VARCHAR" property="userno" />
-    <result column="major" jdbcType="VARCHAR" property="major" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-  </resultMap>
-   <select id="getByPageTopwd" parameterType="java.util.Map" resultMap="BaseResultMap2">
-     select *from forget_pwd where flag="2"
-     <if test="pageno!=null and pageSize!=null">
-     limit #{pageno},#{pageSize}
-     </if>
-     </select>
-     
-     <update id="update2" parameterType="Integer">
+    <resultMap id="BaseResultMap2" type="org.ssm.dufy.entity.Sysuser">
+        <id column="id" jdbcType="INTEGER" property="uid"/>
+        <result column="username" jdbcType="VARCHAR" property="uname"/>
+        <result column="userno" jdbcType="VARCHAR" property="userno"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <select id="getByPageTopwd" parameterType="java.util.Map" resultMap="BaseResultMap2">
+        select *from forget_pwd where flag="2"
+        <if test="pageno!=null and pageSize!=null">
+            limit #{pageno},#{pageSize}
+        </if>
+    </select>
+
+    <update id="update2" parameterType="Integer">
 	    update forget_pwd set flag='1'
 	    where id = #{uid,jdbcType=INTEGER}
 	  </update>
-  
-	  <update id="updateAll2">
+
+    <update id="updateAll2">
 	    update forget_pwd set flag='1'
 	    where flag='2'
 	  </update>
-	  
-	   <select id="personInfo" resultMap="BaseResultMap">
-		    select 
-		    <include refid="Base_Column_List" />
-		    from user
-		  </select>
-  
-  	<resultMap id="BaseResultMap12" type="org.ssm.dufy.entity.Sysuser">
-	    <result column="clazzName" jdbcType="VARCHAR" property="clazzName" />
-	  </resultMap>
-     <select id="getClazzName" resultMap="BaseResultMap12">
+
+    <select id="personInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
+
+    <resultMap id="BaseResultMap12" type="org.ssm.dufy.entity.Sysuser">
+        <result column="clazzName" jdbcType="VARCHAR" property="clazzName"/>
+    </resultMap>
+    <select id="getClazzName" resultMap="BaseResultMap12">
      	SELECT 
 		CONCAT(c.xueyuan,c.major,c.clazzname) clazzName
 		FROM clazz c where id=#{id}
      </select>
-     
-     <resultMap id="BaseResultMap22" type="org.ssm.dufy.entity.Sysuser">
-	    <result column="roomname" jdbcType="VARCHAR" property="roomname" />
-	  </resultMap>
-     <select id="getRoom" resultMap="BaseResultMap22">
-     	SELECT 
-		CONCAT(d.building,d.floor,d.roomname) roomname
-		FROM dormitory d where id=#{id}
-     </select>
-     
-     <resultMap id="BaseResultMap23" type="org.ssm.dufy.entity.PayDmo">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="userid" jdbcType="VARCHAR" property="userid" />
-    <result column="book" jdbcType="VARCHAR" property="book" />
-    <result column="peiyang" jdbcType="VARCHAR" property="peiyang" />
-    <result column="zhusu" jdbcType="VARCHAR" property="zhusu" />
-    <result column="total" jdbcType="VARCHAR" property="total" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
-  </resultMap>
-     <select id="getPayInfo" parameterType="java.util.Map" resultMap="BaseResultMap23">
-     SELECT p.*,u.uname FROM pay p 
-	LEFT JOIN USER u ON p.userid=u.uid  where u.uid = #{uid}
-     </select>
-     
-     <insert id="addPayInfo">
-     	insert into pay set userid=#{userid}
-     </insert>
-     
-     <delete id="dele" >
+
+    <resultMap id="BaseResultMap22" type="org.ssm.dufy.entity.Sysuser">
+        <result column="roomname" jdbcType="VARCHAR" property="roomname"/>
+    </resultMap>
+
+    <delete id="dele">
 	  delete from USER where uid=#{id}
 	  </delete>
-	  
-	  <update id="edit">
+
+    <update id="edit">
 	  update user set age=#{age},pwd=#{pwd},major=#{major} where uid=#{uid}
 	  </update>
-  
+
 </mapper>

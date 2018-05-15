@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.ssm.dufy.dao.SysuserMapper;
-import org.ssm.dufy.entity.PayDmo;
 import org.ssm.dufy.entity.Sysuser;
 import org.ssm.dufy.service.SysuserServier;
 @Service
@@ -70,18 +69,7 @@ public class SysuserServiceImpi implements SysuserServier {
 	public Sysuser getClazzName(int id) {
 		return userdao.getClazzName(id);
 	}
-	@Override
-	public Sysuser getRoom(int id) {
-		return userdao.getRoom(id);
-	}
-	@Override
-	public PayDmo getPayInfo(int id) {
-		return userdao.getPayInfo(id);
-	}
-	@Override
-	public int addPayInfo(int id) {
-		return userdao.addPayInfo(id);
-	}
+
 	@Override
 	public int dele(String id) {
 		return userdao.dele(id);

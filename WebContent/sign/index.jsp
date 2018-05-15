@@ -94,6 +94,7 @@
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                           	  欢迎您！<span style="color:red">${sessionScope.auser.tname }</span>
                         </a>
+                        <a style="cursor: pointer;color: black;" href="${basePath}/logout.do">注销</a>
                     </li>
 
                 </ul>
@@ -108,9 +109,7 @@
             <h3>
                 欢迎来到  学生就业管理信息系统！
             </h3>
-            <ul class="breadcrumb">
-                <li class="active">本团队为您倾情打造 </li>
-            </ul>
+
         </div>
         <!-- page heading end-->
 
