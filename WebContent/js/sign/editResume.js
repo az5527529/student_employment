@@ -47,6 +47,7 @@ function saveInfo(){
                         }
                     }
                     ableNewWork();
+                    ableNewSkill();
                 } else {
                     layer.alert('操作失败', {icon: 5});
                 }
@@ -55,9 +56,20 @@ function saveInfo(){
     }
 }
 function ableNewWork() {
-    $("#newWork").removeClass("unableNewBtn");
-    $("#newWork").addClass("newBtn");
-    $("#newWork").bind("click",newWork);
+
+    if(!$("#work_modify") || $("#work_modify").length==0){
+        if (!$("#newWork").data("events")) {
+            $("#newWork").removeClass("unableNewBtn");
+            $("#newWork").addClass("newBtn");
+            $("#newWork").bind("click",newWork);
+        } else {
+            if(!$("#newWork").data("events")["click"]) {
+                $("#newWork").removeClass("unableNewBtn");
+                $("#newWork").addClass("newBtn");
+                $("#newWork").bind("click",newWork);
+            }
+        }
+    }
 }
 function disabledNewWork() {
     $("#newWork").removeClass("newBtn");//新增标签置灰
@@ -161,7 +173,7 @@ function newWork(){
  * @param isDestroy 是否销毁
  */
 function hideExperienceView(isDestroy){
-    ableNewWork();
+
     var id = $("#work_modify").find("input[name='workExperienceId']").val();
     if(isDestroy){
         $("#work_modify").remove();
@@ -185,6 +197,7 @@ function hideExperienceView(isDestroy){
         //修改表单的id
         $("#work_modify").attr("id","work_"+id);
     }
+    ableNewWork();
 }
 
 /**
@@ -360,14 +373,26 @@ function loadWork(datas){
 //技能
 
 function ableNewSkill() {
-    $("#newSkill").removeClass("unableNewBtn");
-    $("#newSkill").addClass("newBtn");
-    $("#newSkill").bind("click",newSkill);
+    if(!$("#skill_modify") || $("#skill_modify").length==0){
+        if (!$("#newSkill").data("events")) {
+            $("#newSkill").removeClass("unableNewBtn");
+            $("#newSkill").addClass("newBtn");
+            $("#newSkill").bind("click",newSkill);
+        } else {
+            if(!$("#newSkill").data("events")["click"]) {
+                $("#newSkill").removeClass("unableNewBtn");
+                $("#newSkill").addClass("newBtn");
+                $("#newSkill").bind("click",newSkill);
+            }
+        }
+    }
+
 }
 function disabledNewSkill() {
     $("#newSkill").removeClass("newBtn");//新增标签置灰
     $("#newSkill").addClass("unableNewBtn");
     $("#newSkill").unbind("click");
+
 }
 
 //新增技能
@@ -434,7 +459,7 @@ function newSkill(){
  * @param isDestroy 是否销毁
  */
 function hideSkillView(isDestroy){
-    ableNewSkill();
+
     var id = $("#skill_modify").find("input[name='skillInfoId']").val();
     if(isDestroy){
         $("#skill_modify").remove();
@@ -458,6 +483,7 @@ function hideSkillView(isDestroy){
         //修改表单的id
         $("#skill_modify").attr("id","skill_"+id);
     }
+    ableNewSkill();
 }
 
 /**

@@ -205,7 +205,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="padding: 5px;background-color: white;color: #ff6000;border:none;">
                     个人技能
-                    <a class="newBtn" id="newSkill" onclick="newSkill()">新增技能</a>
+                    <a class="newBtn" id="newSkill" >新增技能</a>
                 </div>
                 <div class="panel-body" style="padding: 5px;border:none;" id="skillDiv" >
 

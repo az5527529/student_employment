@@ -128,6 +128,7 @@ function statusFormatter(value,rowData,index){
 
 function newJob(){
     $("#subForm")[0].reset();
+    $("#jobInfoId").val("");
     layer.open({
         type: 1,//层的类型。0：信息框（默认），1：页面层，2：iframe层，3：加载层，4：tips层。
         area: ['50%', '7	0%'],//控制层宽高 [宽度, 高度]

@@ -58,6 +58,71 @@ insert  into `user`(`uid`,`uname`,`sex`,`pwd`,`utype`,`age`,`mbanswer`,`tname`,`
 (20,'admin111',NULL,'123','1','26',NULL,'admin111',NULL,'1','2018-04-17 15:26:18',NULL,'1',NULL,NULL);
 
 
+drop table if exists job_info;
+CREATE TABLE `job_info` (
+  `job_info_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `job_name` varchar(64) NOT NULL DEFAULT '' COMMENT '职位名称',
+  `hire_num` int NOT NULL DEFAULT 0 COMMENT '招聘人数',
+  `requirement` varchar(1024) NOT NULL DEFAULT '' COMMENT '需求',
+  `status` tinyint NOT NULL DEFAULT 0 COMMENT '职位状态,1:招聘中,2:已结束',
+  `created_time` varchar(32) NOT NULL DEFAULT '' COMMENT '发布时间',
+  `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '企业id',
+  PRIMARY KEY (job_info_id),
+  key job_info_user_id(user_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+drop table if exists resume_info;
+CREATE TABLE `resume_info` (
+  `resume_info_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `resume_name` varchar(64) NOT NULL DEFAULT '' COMMENT '简历名称',
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '姓名',
+  `telephone` varchar(20) NOT NULL DEFAULT '' COMMENT '电话',
+  `major` varchar(64) NOT NULL DEFAULT '' COMMENT '专业',
+  `school` varchar(64) NOT NULL DEFAULT '' COMMENT '毕业学校',
+  `birthday` varchar(32) NOT NULL DEFAULT '' COMMENT '出生年月',
+  `graduate_time` varchar(32) NOT NULL DEFAULT '' COMMENT '毕业时间',
+  `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '学生id',
+  PRIMARY KEY (resume_info_id),
+  key resume_info_user_id(user_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+drop table if exists work_experience;
+CREATE TABLE `work_experience` (
+  `work_experience_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `company` varchar(64) NOT NULL DEFAULT '' COMMENT '公司名称',
+  `job` varchar(64) NOT NULL DEFAULT '' COMMENT '职位',
+  `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '工作描述',
+  `start_time` varchar(32) NOT NULL DEFAULT '' COMMENT '开始年月',
+  `end_time` varchar(32) NOT NULL DEFAULT '' COMMENT '结束年月',
+  `resume_info_id` int(11) NOT NULL DEFAULT 0 COMMENT '简历id',
+  PRIMARY KEY (work_experience_id),
+  key work_experience_resume_info_id(resume_info_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+drop table if exists skill_info;
+CREATE TABLE `skill_info` (
+  `skill_info_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `skill_name` varchar(64) NOT NULL DEFAULT '' COMMENT '技能名称',
+  `skill_ability` tinyint NOT NULL DEFAULT 0 COMMENT '掌握程度',
+
+  `resume_info_id` int(11) NOT NULL DEFAULT 0 COMMENT '简历id',
+  PRIMARY KEY (skill_info_id),
+  key skill_info_resume_info_id(resume_info_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+drop table if exists deliver_record;
+CREATE TABLE `deliver_record` (
+  `deliver_record_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `job_info_id` int(11) NOT NULL DEFAULT 0 COMMENT '职位id',
+  `resume_info_id` int(11) NOT NULL DEFAULT 0 COMMENT '简历id',
+  `deliver_time` varchar(32) NOT NULL DEFAULT 0 COMMENT '投递时间',
+  PRIMARY KEY (deliver_record_id),
+  key deliver_record_job_info_id(job_info_id),
+  key deliver_record_resume_info_id(resume_info_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
